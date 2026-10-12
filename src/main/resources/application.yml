@@ -4,6 +4,19 @@ server:
 spring:
   application:
     name: tvmaze-middleware
+  data:
+    mongodb:
+      uri: ${MONGODB_URI:mongodb://localhost:27017/tvmaze}
+      auto-index-creation: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
 
 tvmaze:
   base-url: ${TVMAZE_BASE_URL:https://api.tvmaze.com}
