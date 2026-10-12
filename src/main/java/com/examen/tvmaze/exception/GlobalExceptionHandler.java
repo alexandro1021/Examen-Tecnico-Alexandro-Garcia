@@ -21,6 +21,12 @@ public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+    @ExceptionHandler(ShowNotFoundException.class)
+    ResponseEntity<ErrorResponse> showNotFound(ShowNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse("NOT_FOUND", exception.getMessage()));
+    }
+
     @ExceptionHandler(TvMazeClientException.class)
     ResponseEntity<ErrorResponse> tvMaze(TvMazeClientException exception) {
         log.warn("Fallo al consultar TV Maze: {}", exception.getMessage());
