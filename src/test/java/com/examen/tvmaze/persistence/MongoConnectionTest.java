@@ -19,5 +19,6 @@ class MongoConnectionTest {
         Document result = mongoTemplate.executeCommand("{ ping: 1 }");
 
         assertThat(result.get("ok")).isEqualTo(1.0);
+        assertThat(mongoTemplate.getDb().getName()).isEqualTo("tvmaze");
     }
 }

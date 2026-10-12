@@ -4,9 +4,10 @@ server:
 spring:
   application:
     name: tvmaze-middleware
+  mongodb:
+    uri: ${MONGODB_URI:mongodb://localhost:27017/tvmaze}
   data:
     mongodb:
-      uri: ${MONGODB_URI:mongodb://localhost:27017/tvmaze}
       auto-index-creation: true
 
 management:
