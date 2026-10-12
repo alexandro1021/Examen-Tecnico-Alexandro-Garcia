@@ -15,6 +15,7 @@ Consulta `https://api.tvmaze.com/search/shows?q={texto}` y devuelve un arreglo c
 | `channel` | `network.name`, o `webChannel.name` si no hay network |
 | `summary` | `show.summary` |
 | `genres` | `show.genres` |
+| `comments` | comentarios guardados en MongoDB: `comment` y `rating` |
 
 ```bash
 curl "http://localhost:8080/api/search?search_query=girls"

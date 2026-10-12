@@ -24,7 +24,8 @@ public final class ShowMapper {
                 textOrNull(show, "name"),
                 channel(show),
                 textOrNull(show, "summary"),
-                genres(show)));
+                genres(show),
+                List.of()));
     }
 
     static String channel(JsonNode show) {

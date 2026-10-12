@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.examen.tvmaze.dto.CommentView;
 import com.examen.tvmaze.dto.ShowSearchItem;
 import com.examen.tvmaze.exception.GlobalExceptionHandler;
 import com.examen.tvmaze.service.SearchService;
@@ -29,7 +30,13 @@ class SearchControllerTest {
     @Test
     void returnsTheShowProjection() throws Exception {
         when(searchService.search("girls")).thenReturn(List.of(
-                new ShowSearchItem(139, "Girls", "HBO", "<p>Comic.</p>", List.of("Drama", "Romance"))));
+                new ShowSearchItem(
+                        139,
+                        "Girls",
+                        "HBO",
+                        "<p>Comic.</p>",
+                        List.of("Drama", "Romance"),
+                        List.of(new CommentView("Buena", 4)))));
 
         mockMvc.perform(get("/api/search").param("search_query", "girls"))
                 .andExpect(status().isOk())
@@ -38,7 +45,8 @@ class SearchControllerTest {
                 .andExpect(jsonPath("$[0].channel").value("HBO"))
                 .andExpect(jsonPath("$[0].summary").value("<p>Comic.</p>"))
                 .andExpect(jsonPath("$[0].genres[0]").value("Drama"))
-                .andExpect(jsonPath("$[0].comments").doesNotExist());
+                .andExpect(jsonPath("$[0].comments[0].comment").value("Buena"))
+                .andExpect(jsonPath("$[0].comments[0].rating").value(4));
     }
 
     @Test
