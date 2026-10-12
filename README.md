@@ -30,22 +30,6 @@ Antes de llamar a TV Maze busca el id en la colección `shows` de MongoDB. Si ya
 curl "http://localhost:8080/api/show/139"
 ```
 
-## Punto C — comentarios
-
-`POST /api/comments`
-
-Guarda una calificación y un comentario ligados al id del show. El show tiene que existir en TV Maze (si no estaba en caché, se consulta y se guarda). `rating` va de 0 a 5. La respuesta es el estado de la petición.
-
-```bash
-curl -X POST "http://localhost:8080/api/comments" \
-  -H "Content-Type: application/json" \
-  -d '{"show_id":139,"comment":"Muy buena","rating":5}'
-```
-
-```json
-{"status":"CREATED"}
-```
-
 ## MongoDB
 
 La caché de shows y los comentarios se guardan en MongoDB. La URI se toma de `MONGODB_URI` y, si no está definida, usa `mongodb://localhost:27017/tvmaze`.
