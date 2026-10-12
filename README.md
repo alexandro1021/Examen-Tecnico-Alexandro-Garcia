@@ -85,6 +85,13 @@ Requiere Java 21.
 
 La documentación interactiva queda en `http://localhost:8080/swagger-ui.html`.
 
+## Entrega
+
+El examen pide el repositorio **privado** y acceso de lectura al usuario de GitHub **Pinwox**:
+
+1. En el repositorio, abre **Settings → General → Danger Zone → Change repository visibility** y elige **Private**.
+2. En **Settings → Collaborators**, invita a `Pinwox`.
+
 ## Pruebas
 
 MongoDB tiene que estar escuchando en `localhost:27017` (o define `MONGODB_URI`).
