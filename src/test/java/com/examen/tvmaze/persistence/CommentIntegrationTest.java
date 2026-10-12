@@ -73,5 +73,16 @@ class CommentIntegrationTest {
                     assertThat(comment.getComment()).isEqualTo("Muy buena");
                     assertThat(comment.getRating()).isEqualTo(4);
                 });
+
+        HttpRequest showRequest = HttpRequest.newBuilder(URI.create("http://127.0.0.1:" + port + "/api/show/139"))
+                .GET()
+                .build();
+        HttpResponse<String> show = httpClient.send(showRequest, HttpResponse.BodyHandlers.ofString());
+
+        assertThat(show.statusCode()).isEqualTo(200);
+        assertThat(show.body()).contains("\"name\":\"Girls\"");
+        assertThat(show.body()).contains("\"comment\":\"Muy buena\"");
+        assertThat(show.body()).contains("\"rating\":4");
+        assertThat(TV_MAZE.getRequestCount()).isEqualTo(1);
     }
 }

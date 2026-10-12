@@ -28,19 +28,19 @@ class CommentServiceTest {
     private ShowCommentRepository showCommentRepository;
 
     @Mock
-    private ShowService showService;
+    private ShowCatalog showCatalog;
 
     private final Clock clock = Clock.fixed(Instant.parse("2026-10-12T00:00:00Z"), ZoneOffset.UTC);
     private CommentService commentService;
 
     @BeforeEach
     void setUp() {
-        commentService = new CommentService(showCommentRepository, showService, clock);
+        commentService = new CommentService(showCommentRepository, showCatalog, clock);
     }
 
     @Test
     void storesACommentWhenTheShowExists() {
-        when(showService.getShow(139)).thenReturn(JsonNodeFactory.instance.objectNode().put("id", 139));
+        when(showCatalog.load(139)).thenReturn(JsonNodeFactory.instance.objectNode().put("id", 139));
 
         var status = commentService.create(new CreateCommentRequest(139, "  Muy buena  ", 5));
 
@@ -55,7 +55,7 @@ class CommentServiceTest {
 
     @Test
     void doesNotStoreACommentForAnUnknownShow() {
-        when(showService.getShow(4)).thenThrow(new ShowNotFoundException(4));
+        when(showCatalog.load(4)).thenThrow(new ShowNotFoundException(4));
 
         assertThatThrownBy(() -> commentService.create(new CreateCommentRequest(4, "No existe", 1)))
                 .isInstanceOf(ShowNotFoundException.class);

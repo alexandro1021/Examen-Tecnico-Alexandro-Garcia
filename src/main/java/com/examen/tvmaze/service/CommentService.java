@@ -17,17 +17,17 @@ import org.springframework.stereotype.Service;
 public class CommentService {
 
     private final ShowCommentRepository showCommentRepository;
-    private final ShowService showService;
+    private final ShowCatalog showCatalog;
     private final Clock clock;
 
-    public CommentService(ShowCommentRepository showCommentRepository, ShowService showService, Clock clock) {
+    public CommentService(ShowCommentRepository showCommentRepository, ShowCatalog showCatalog, Clock clock) {
         this.showCommentRepository = showCommentRepository;
-        this.showService = showService;
+        this.showCatalog = showCatalog;
         this.clock = clock;
     }
 
     public RequestStatusResponse create(CreateCommentRequest request) {
-        showService.getShow(request.showId());
+        showCatalog.load(request.showId());
         showCommentRepository.save(new ShowComment(
                 request.showId(),
                 request.comment().trim(),
