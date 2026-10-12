@@ -24,10 +24,26 @@ curl "http://localhost:8080/api/search?search_query=girls"
 
 `GET /api/show/{show_id}`
 
-Consulta `https://api.tvmaze.com/shows/{show_id}` y devuelve el objeto show completo. Si TV Maze responde 404, la API responde 404.
+Antes de llamar a TV Maze busca el id en la colección `shows` de MongoDB. Si ya está guardado, devuelve ese objeto. Si no, consulta `https://api.tvmaze.com/shows/{show_id}`, guarda el JSON completo y después lo devuelve. Un 404 de TV Maze no se guarda.
 
 ```bash
 curl "http://localhost:8080/api/show/139"
+```
+
+## Punto C — comentarios
+
+`POST /api/comments`
+
+Guarda una calificación y un comentario ligados al id del show. El show tiene que existir en TV Maze (si no estaba en caché, se consulta y se guarda). `rating` va de 0 a 5. La respuesta es el estado de la petición.
+
+```bash
+curl -X POST "http://localhost:8080/api/comments" \
+  -H "Content-Type: application/json" \
+  -d '{"show_id":139,"comment":"Muy buena","rating":5}'
+```
+
+```json
+{"status":"CREATED"}
 ```
 
 ## MongoDB
