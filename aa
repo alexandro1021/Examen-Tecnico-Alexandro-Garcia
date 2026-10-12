@@ -1,5 +1,0 @@
-# Create a blank initial commit
-git commit --allow-empty -m "Initial empty commit"
-
-# Push it to the remote repository
-git push -u origin main
